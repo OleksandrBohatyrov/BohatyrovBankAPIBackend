@@ -8,19 +8,16 @@ from drf_yasg import openapi
 # Настройка Swagger
 schema_view = get_schema_view(
     openapi.Info(
-        title="User Balance API",
+        title="User balance API",
         default_version='v1',
-        description="API для работы с балансом пользователей",
-        terms_of_service="https://www.google.com/policies/terms/",
-        contact=openapi.Contact(email="contact@example.com"),
-        license=openapi.License(name="BSD License"),
+        description="Oleksandr Bohatyrov",
     ),
     public=True,
     permission_classes=(permissions.AllowAny,),
 )
 
 urlpatterns = [
-    path('admin/', admin.site.urls),  # Импорт path исправляет ошибку
+    path('admin/', admin.site.urls),  
     path('api/', include('balance.urls')),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
 ]

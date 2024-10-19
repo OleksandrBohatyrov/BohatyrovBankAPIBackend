@@ -3,9 +3,6 @@ from .models import UserBalance
 
 @admin.register(UserBalance)
 class UserBalanceAdmin(admin.ModelAdmin):
-    list_display = ('user', 'balance')  
-    search_fields = ('user__username',) 
-    list_editable = ('balance',)  
-
-
-
+    list_display = ('user', 'balance')  # Показываем юзера и баланс
+    search_fields = ('user__username',)  # Возможность искать по имени юзера
+    list_editable = ('balance',)  # Разрешаем редактировать баланс напрямую в списке
