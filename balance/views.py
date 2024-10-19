@@ -40,16 +40,27 @@ class UserBalanceView(APIView):
                 return Response({"error": "User not found"}, status=status.HTTP_404_NOT_FOUND)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    # Описание поля balance
+    balance_param = openapi.Parameter(
+        'balance', in_=openapi.IN_BODY, description='Новый баланс пользователя', type=openapi.TYPE_NUMBER
+    )
+
+    @swagger_auto_schema(request_body=BalanceUpdateSerializer)
     def put(self, request, user_id, *args, **kwargs):
+        """
+        Обновление баланса пользователя.
+        """
         try:
             user_balance = UserBalance.objects.get(user_id=user_id)
         except UserBalance.DoesNotExist:
             return Response({"error": "User not found"}, status=status.HTTP_404_NOT_FOUND)
-        
-        serializer = UserBalanceSerializer(user_balance, data=request.data, partial=True)
+
+        serializer = BalanceUpdateSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
+            balance = serializer.validated_data['balance']
+            user_balance.balance = balance
+            user_balance.save()
+            return Response({"message": "Balance updated successfully", "balance": user_balance.balance}, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
