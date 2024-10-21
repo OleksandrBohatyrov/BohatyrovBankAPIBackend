@@ -1,126 +1,138 @@
+# User Balance Service API
 
-# User Balance Service
+## Description
 
-User Balance Service — это API на основе Django, который предоставляет функции управления балансами пользователей и перевода средств между ними. Этот проект использует Django и Django Rest Framework (DRF) для построения RESTful API.
+This project is an API service for managing user balances. The main features include:
 
-## Оглавление
+-   User creation
+-   Viewing user balance
+-   Updating user balance
 
-- [Установка](#установка)
-- [Использование](#использование)
-- [API Роуты](#api-роуты)
-- [Запуск Тестов](#запуск-тестов)
-- [Технологии](#технологии)
+## Technology Stack
 
-## Установка
+-   **Django** - Backend framework
+-   **Django Rest Framework (DRF)** - For creating the API
+-   **drf-yasg** - For generating Swagger documentation
+-   **SQLite** - Default database for Django
 
-### 1. Клонирование репозитория
+## Setup Instructions
 
-```bash
-git clone https://github.com/yourusername/user-balance-service.git
-cd user-balance-service
-```
+To run this project on your local machine, follow these steps:
 
-### 2. Создайте виртуальное окружение
-
-Рекомендуется использовать виртуальное окружение для управления зависимостями.
+### 1. Clone the repository
 
 ```bash
-python -m venv venv
-source venv/bin/activate  # Для Linux/MacOS
-venv\Scripts\activate  # Для Windows
+git clone <repository_url>
+cd user_balance_service
 ```
 
-### 3. Установка зависимостей
+### 2. Install dependencies
+
+Ensure that Python 3.x is installed on your system. Then run:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 4. Применение миграций
+### 3. Run migrations
 
-После настройки окружения и установки зависимостей выполните миграции базы данных:
+After installing the dependencies, apply the migrations to set up the database schema:
 
 ```bash
 python manage.py migrate
 ```
 
-### 5. Запуск сервера
+### 4. Run the development server
 
-Для локальной разработки и тестирования:
+Now, you can start the Django development server by running:
 
 ```bash
 python manage.py runserver
 ```
 
-Теперь сервер доступен по адресу: `http://127.0.0.1:8000/`.
+Access the project at `http://127.0.0.1:8000/`.
 
-## Использование
+## API Endpoints
 
-Проект предоставляет API для управления балансами пользователей. Взаимодействие с API можно осуществлять через Postman, cURL или встроенную страницу Swagger документации.
+### 1. Create a user
 
-### Swagger UI
+-   **Method**: POST
+-   **URL**: `/balance/`
+-   **Description**: Creates a new user.
+-   **Request Example**:
 
-Интерфейс документации Swagger доступен по следующему адресу:
-
+```json
+{
+	"username": "john_doe",
+	"password": "securepassword",
+	"email": "john@example.com",
+	"first_name": "John",
+	"last_name": "Doe"
+}
 ```
-http://127.0.0.1:8000/swagger/
+
+-   **Response Example**:
+
+```json
+{
+	"id": 1,
+	"username": "john_doe",
+	"email": "john@example.com",
+	"first_name": "John",
+	"last_name": "Doe"
+}
 ```
 
-## API Роуты
+### 2. Retrieve user balance
 
-### 1. Получение и изменение баланса пользователя
+-   **Method**: GET
+-   **URL**: `/balance/{user_id}/`
+-   **Description**: Retrieves the balance of a user by `user_id`.
+-   **Response Example**:
 
-- **GET /balance/{user_id}/**
-  - Описание: Получить баланс пользователя по его ID.
-  - Пример: `/balance/3/`
+```json
+{
+	"user_id": 1,
+	"username": "john_doe",
+	"balance": "100.00"
+}
+```
 
-- **PUT /balance/{user_id}/**
-  - Описание: Обновить баланс пользователя по его ID (неполное обновление).
-  - Пример: `/balance/3/`
+### 3. Update user balance
 
-### 2. Перевод средств между пользователями
+-   **Method**: PUT
+-   **URL**: `/balance/{user_id}/`
+-   **Description**: Updates the balance of a user.
+-   **Request Example**:
 
-- **POST /balance/transfer/**
-  - Описание: Перевод средств с одного пользователя на другого.
-  - Пример: `/balance/transfer/`
-  - Тело запроса:
-    ```json
-    {
-      "from_user_id": 1,
-      "to_user_id": 2,
-      "amount": 100.0
-    }
-    ```
+```json
+{
+	"balance": "150.00"
+}
+```
 
-### 3. Создание нового пользователя
+-   **Response Example**:
 
-- **POST /user/create/**
-  - Описание: Создать нового пользователя с нулевым балансом.
-  - Пример: `/user/create/`
-  - Тело запроса:
-    ```json
-    {
-      "username": "new_user"
-    }
-    ```
+```json
+{
+	"user_id": 1,
+	"username": "john_doe",
+	"balance": "150.00"
+}
+```
 
-### 4. Получение всех пользователей и их балансов
+## Swagger Documentation
 
-- **GET /balance/all/**
-  - Описание: Получить список всех пользователей и их балансов.
-  - Пример: `/balance/all/`
+To view the Swagger documentation, open your browser and navigate to `http://127.0.0.1:8000/swagger/` after running the server. This will display the complete API documentation with interactive endpoints.
 
-## Запуск Тестов
+## Testing
 
-Чтобы запустить тесты проекта, используйте команду:
+To run tests, use the following command:
 
 ```bash
 python manage.py test
 ```
 
-## Технологии
+## License
 
-- **Django** — мощный веб-фреймворк для Python
-- **Django Rest Framework** — библиотека для создания RESTful API
-- **Swagger** — инструмент для автодокументирования API
-- **SQLite** — база данных по умолчанию (может быть заменена на другую)
+This project is licensed under the MIT License.
