@@ -22,7 +22,7 @@ To run this project on your local machine, follow these steps:
 ### 1. Clone the repository
 
 ```bash
-git clone <repository_url>
+git clone https://github.com/OleksandrBohatyrov/BohatyrovBankAPIBackend.git
 cd user_balance_service
 ```
 
