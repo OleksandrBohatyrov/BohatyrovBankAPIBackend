@@ -80,8 +80,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'mysql.connector.django',
         'NAME': 'user_balance_db', 
-        'USER': 'root',          
-        'PASSWORD': '',            
+        'USER': 'new_user',          
+        'PASSWORD': '123',            
         'HOST': 'localhost',       
         'PORT': '3306',            
     }
