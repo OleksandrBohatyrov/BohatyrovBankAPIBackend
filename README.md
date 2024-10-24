@@ -52,6 +52,10 @@ python manage.py runserver
 
 Access the project at `http://127.0.0.1:8000/`.
 
+## Login as admin
+-	**Username**: Oleksandr
+-	**Password**: new_password
+
 ## API Endpoints
 
 ### 1. Create a user
